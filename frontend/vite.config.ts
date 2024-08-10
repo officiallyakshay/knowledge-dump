@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/blogs': 'http://localhost:6969',
+      '/blogs': 'https://knowledge-dump.vercel.app:6969',
     },
   },
 })
