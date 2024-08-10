@@ -1,5 +1,5 @@
 # Knowledge Dump
 
-Write a blog of something you know!
+Write a blog about something you know!
 
 - Powered by Typescript, React, Express, & MongoDB
