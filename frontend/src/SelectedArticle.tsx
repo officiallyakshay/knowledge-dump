@@ -19,14 +19,11 @@ export const SelectedArticle = () => {
     fetchArticle();
   }, []);
 
-  console.log("article in selected article component", article);
-
   return (
     <Flex
       flexDir="column"
       p="4"
       borderRadius="5"
-      mt="5"
       key={article._id}
       alignItems="center"
     >
@@ -35,26 +32,18 @@ export const SelectedArticle = () => {
           {article.heading}
         </Heading>
         <Flex alignItems="center">
-          <Text>{article.author}</Text>
+          <Text fontSize="sm">{article.author}</Text>
           <Text ml="2" mr="2">
             ·
           </Text>
-          <Text fontSize="xs">
+          <Text fontSize="sm">
             {new Date(article.date).toLocaleDateString("en-us", {
               month: "long",
               day: "numeric",
             })}
           </Text>
         </Flex>
-        <Text
-          fontSize="sm"
-          textOverflow="ellipsis"
-          maxWidth="100ch"
-          whiteSpace="nowrap"
-          overflow="hidden"
-        >
-          {article.content}
-        </Text>
+        <Text fontSize="sm">{article.content}</Text>
       </Flex>
     </Flex>
   );

@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <Flex p="4">
-        <Link as={ReactRouterLink} to="/" _hover={{ color: "red" }}>
+        <Link as={ReactRouterLink} to="/" _hover={{ color: "grey" }}>
           <Text>Knowledge Dump</Text>
         </Link>
       </Flex>

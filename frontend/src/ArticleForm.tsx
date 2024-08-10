@@ -58,7 +58,7 @@ export const ArticleForm = ({ onSubmitSuccess }: any) => {
           size="sm"
           onClick={() => setWriteAnArticle(!writeAnArticle)}
         >
-          Add Your Article
+          Add Your Blog
         </Button>
       ) : (
         <Flex>
@@ -71,14 +71,14 @@ export const ArticleForm = ({ onSubmitSuccess }: any) => {
               onChange={(e) => setFullName(e.target.value)}
             />
             <Input
-              placeholder="Article Title"
+              placeholder="Blog Title"
               size="sm"
               mb="4"
               value={heading}
               onChange={(e) => setHeading(e.target.value)}
             />
             <Textarea
-              placeholder="Add your article!"
+              placeholder="Add your blog!"
               value={articleContent}
               onChange={(e) => setArticleContent(e.target.value)}
               size="sm"

@@ -5,6 +5,7 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import axios from "axios";
 
 export const ListOfArticles = ({ reload }: any) => {
+  const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -18,18 +19,18 @@ export const ListOfArticles = ({ reload }: any) => {
     };
 
     fetchArticles();
+    setLoading(true);
   }, [reload]);
 
-  console.log("get list of articles", articles);
   return (
     <>
-      {articles.length === 0 ? (
-        <Text mt="10">Loading articles...</Text>
+      {articles.length === 0 && !loading ? (
+        <Text mt="5">Loading blogs...</Text>
       ) : (
-        <Box mt="10">
+        <Box mt="5">
           <Box>
             {`${articles.length} ${
-              articles.length === 1 ? "article" : "articles"
+              articles.length === 1 ? "blog" : "blogs"
             } available to read`}
           </Box>
           {articles.map((article: ArticleProps) => (
