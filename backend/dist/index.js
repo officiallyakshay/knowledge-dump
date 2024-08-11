@@ -10,7 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use(body_parser_1.default.json());
 app.use((0, cors_1.default)({
-    origin: "http://localhost:5174",
+    origin: "https://knowledge-dump-frontend.vercel.app",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type, Authorization",
 }));
