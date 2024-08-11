@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/blogs': 'https://knowledge-dump-backend.vercel.app/',
+      '/blogs': 'https://knowledge-dump-backend.vercel.app',
     },
   },
 })
