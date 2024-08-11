@@ -19,7 +19,7 @@ const Blog = require("./models/blog.model");
 // const DATABASE_URL = import.meta.env.DATABASE_URL;
 // console.log("in index.ts DATABASE_URL", DATABASE_URL)
 mongoose_1.default
-    .connect("mongodb+srv://akshaysprabhakar:v0kg6ckZCIABK8gH@knowledge-dump.ji3kq.mongodb.net/?retryWrites=true&w=majority&appName=Knowledge-Dump")
+    .connect("mongodb+srv://akshaysprabhakar:v0kg6ckZCIABK8gH@knowledge-dump.ji3kq.mongodb.net/blogs?retryWrites=true&w=majority&appName=Knowledge-Dump")
     .then(() => console.log("connected to database"))
     .catch(() => console.log("connection failed"));
 app.get("/blogs", async (req, res) => {

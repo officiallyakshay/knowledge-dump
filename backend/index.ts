@@ -20,7 +20,7 @@ const Blog = require("./models/blog.model")
 
 mongoose
   .connect(
-    "mongodb+srv://akshaysprabhakar:v0kg6ckZCIABK8gH@knowledge-dump.ji3kq.mongodb.net/?retryWrites=true&w=majority&appName=Knowledge-Dump"
+    "mongodb+srv://akshaysprabhakar:v0kg6ckZCIABK8gH@knowledge-dump.ji3kq.mongodb.net/blogs?retryWrites=true&w=majority&appName=Knowledge-Dump"
   )
   .then(() => console.log("connected to database"))
   .catch(() => console.log("connection failed"))
