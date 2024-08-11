@@ -24,7 +24,7 @@ export const ListOfArticles = ({ reload }: any) => {
 
   return (
     <>
-      {articles.length === 0 && !loading ? (
+      {Array.isArray(articles) && articles.length === 0 && !loading ? (
         <Text mt="5">Loading blogs...</Text>
       ) : (
         <Box mt="5">
