@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: "https://knowledge-dump.vercel.app",
+  origin: "https://knowledge-dump-frontend.vercel.app/",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type, Authorization",
 }));

@@ -11,7 +11,7 @@ export const SelectedArticle = () => {
   useEffect(() => {
     const fetchArticle = async () => {
       const specificArticle = await axios.get(
-        `https://knowledge-dump.vercel.app/blog/${id}`
+        `https://knowledge-dump-backend.vercel.app/blog/${id}`
       );
       setArticle(specificArticle.data);
     };
