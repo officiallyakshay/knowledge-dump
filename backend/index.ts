@@ -16,9 +16,8 @@ app.use(
 
 const PORT = 6969;
 const Blog = require("./models/blog.model");
-// const DATABASE_URL = import.meta.env.DATABASE_URL;
-
-// console.log("in index.ts DATABASE_URL", DATABASE_URL)
+const DATABASE_URL = process.env.VITE_DATABASE_URL;
+console.log("in index.ts DATABASE_URL", DATABASE_URL);
 
 mongoose
   .connect(
