@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { ArticleProps } from "./types";
 import { Link as ReactRouterLink } from "react-router-dom";
@@ -49,7 +49,36 @@ export const ListOfArticles = ({ reload }: any) => {
                 _hover={{ textDecor: "none" }}
               >
                 <Flex flexDir="column" gap="4">
-                  <Text>{article.author}</Text>
+                  <Flex justifyContent="space-between">
+                    {/*                  <Link
+                    key={article._id}
+                    as={ReactRouterLink}
+                    to={`/author/${article.author
+                      .split(" ")
+                      .join("")
+                      .toLowerCase()}`}
+                    _hover={{ textDecor: "none" }}
+                  > */}
+                    <Text>{article.author}</Text>
+                    {/* </Link> */}
+                    {/* <Flex>
+                      <Button
+                        size="xs"
+                        mr="2"
+                        variant="outline"
+                        onClick={(e) => console.log("edit this article")}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        onClick={(e) => console.log("delete this article")}
+                      >
+                        X
+                      </Button>
+                    </Flex> */}
+                  </Flex>
                   <Heading as="h5" size="md">
                     {article.heading}
                   </Heading>
