@@ -1,10 +1,20 @@
 import {
   Button,
-  Flex,
   FormControl,
+  FormLabel,
   Input,
   Textarea,
   useToast,
+  VStack,
+  Heading,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -14,7 +24,8 @@ export const ArticleForm = ({ onSubmitSuccess }: any) => {
   const [heading, setHeading] = useState("");
   const [articleContent, setArticleContent] = useState("");
   const toast = useToast();
-  const [writeAnArticle, setWriteAnArticle] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Chakra modal control
 
   const handleArticleSubmit = () => {
     const payload = {
@@ -23,26 +34,42 @@ export const ArticleForm = ({ onSubmitSuccess }: any) => {
       content: articleContent,
       date: new Date(),
     };
+
     if (fullName === "" || heading === "" || articleContent === "") {
       toast({
         title: "Form Incomplete",
-        description:
-          "Field out every field in the form to add to your knowledge dump.",
+        description: "Please fill out all fields to submit your blog.",
         status: "error",
         duration: 4000,
         isClosable: true,
       });
       return;
     }
-    // const newArticle = axios.post("/blogs", payload);
 
     axios
       .post("/blogs", payload)
       .then((response) => {
         console.log("response", response);
         onSubmitSuccess();
+        toast({
+          title: "Blog Added",
+          description: "Your blog has been successfully added!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        onClose(); // Close modal on successful submit
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "An error occurred while submitting the blog.",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+        });
+      });
 
     setFullName("");
     setHeading("");
@@ -51,59 +78,69 @@ export const ArticleForm = ({ onSubmitSuccess }: any) => {
 
   return (
     <>
-      {!writeAnArticle ? (
-        <Button
-          colorScheme="blue"
-          variant="outline"
-          size="sm"
-          onClick={() => setWriteAnArticle(!writeAnArticle)}
-        >
-          Add Your Blog
-        </Button>
-      ) : (
-        <Flex>
-          <FormControl isRequired onSubmit={handleArticleSubmit}>
-            <Input
-              placeholder="Full Name"
-              size="sm"
-              mb="4"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            <Input
-              placeholder="Blog Title"
-              size="sm"
-              mb="4"
-              value={heading}
-              onChange={(e) => setHeading(e.target.value)}
-            />
-            <Textarea
-              placeholder="Add your blog!"
-              value={articleContent}
-              onChange={(e) => setArticleContent(e.target.value)}
-              size="sm"
-              mb="6"
-            />
+      <Button colorScheme="purple" variant="solid" size="md" onClick={onOpen}>
+        Add Your Blog
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Your Knowledge Dump</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={4}>
+              <FormControl isRequired>
+                <FormLabel htmlFor="fullName">Full Name</FormLabel>
+                <Input
+                  id="fullName"
+                  placeholder="Enter your full name"
+                  size="md"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel htmlFor="heading">Blog Title</FormLabel>
+                <Input
+                  id="heading"
+                  placeholder="Enter your blog title"
+                  size="md"
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel htmlFor="articleContent">Content</FormLabel>
+                <Textarea
+                  id="articleContent"
+                  placeholder="Write your blog here..."
+                  value={articleContent}
+                  onChange={(e) => setArticleContent(e.target.value)}
+                  size="md"
+                  rows={6}
+                />
+              </FormControl>
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter>
             <Button
-              colorScheme="black"
-              variant="outline"
-              size="sm"
+              colorScheme="purple"
+              variant="solid"
+              size="md"
               onClick={handleArticleSubmit}
+              mr={4}
             >
-              Add Your Knowledge Dump
+              Submit Blog
             </Button>
-            <Button
-              colorScheme="red"
-              variant="outline"
-              onClick={() => setWriteAnArticle(!writeAnArticle)}
-              ml="5"
-              size="sm"
-            >
-              Close Form
+            <Button variant="outline" size="md" onClick={onClose}>
+              Close
             </Button>
-          </FormControl>
-        </Flex>
-      )}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

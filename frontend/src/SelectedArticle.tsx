@@ -1,50 +1,90 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  useColorModeValue,
+  Button,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export const SelectedArticle = () => {
   const { id } = useParams();
-  const [article, setArticle] = useState<any>([]);
+  const navigate = useNavigate(); // Hook for navigation
+  const [article, setArticle] = useState<any>({});
 
   useEffect(() => {
     const fetchArticle = async () => {
-      const specificArticle = await axios.get(
-        `http://localhost:6969/blog/${id}`
-      );
-      specificArticle ? setArticle(specificArticle.data) : setArticle([]);
+      try {
+        const response = await axios.get(`http://localhost:6969/blog/${id}`);
+        setArticle(response.data);
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
     };
 
     fetchArticle();
-  }, []);
+  }, [id]);
 
   return (
-    <Flex
-      flexDir="column"
-      p="4"
-      borderRadius="5"
-      key={article._id}
-      alignItems="center"
-    >
-      <Flex flexDir="column" gap="4">
-        <Heading as="h5" size="xl">
-          {article.heading}
-        </Heading>
-        <Flex alignItems="center">
-          <Text fontSize="sm">{article.author}</Text>
-          <Text ml="2" mr="2">
-            ·
+    <>
+      <Flex
+        flexDir="column"
+        p="6"
+        borderRadius="lg"
+        alignItems="center"
+        mx="auto"
+        maxW={{ base: "95%", md: "80%", lg: "60%" }}
+        bg={useColorModeValue("white", "gray.800")}
+        boxShadow="2xl"
+        mt="8"
+      >
+        <Box w="100%" textAlign="left">
+          <Button
+            onClick={() => navigate(-1)} // Go back to the previous page
+            colorScheme="purple"
+            mb="4"
+            variant="outline"
+          >
+            Back
+          </Button>
+          <Heading
+            as="h1"
+            size="2xl"
+            mb="4"
+            color={useColorModeValue("purple.800", "purple.200")}
+          >
+            {article.heading || "Loading..."}
+          </Heading>
+          <Flex alignItems="center" mb="4">
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.500", "gray.400")}
+            >
+              {article.author || "Unknown Author"}
+            </Text>
+            <Text mx="2" color={useColorModeValue("gray.500", "gray.400")}>
+              ·
+            </Text>
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.500", "gray.400")}
+            >
+              {article.date
+                ? new Date(article.date).toLocaleDateString("en-us", {
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "Unknown Date"}
+            </Text>
+          </Flex>
+          <Text fontSize="lg" color={useColorModeValue("gray.700", "gray.300")}>
+            {article.content || "Article content will appear here."}
           </Text>
-          <Text fontSize="sm">
-            {new Date(article.date).toLocaleDateString("en-us", {
-              month: "long",
-              day: "numeric",
-            })}
-          </Text>
-        </Flex>
-        <Text fontSize="sm">{article.content}</Text>
+        </Box>
       </Flex>
-    </Flex>
+    </>
   );
 };
